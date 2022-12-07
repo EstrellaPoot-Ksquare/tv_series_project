@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppIcons {
-  static Icon settings = const Icon(Icons.settings);
-  static Icon find = const Icon(Icons.search_rounded);
+  static IconData settings = Icons.settings;
+  static IconData find = Icons.search_rounded;
+  static IconData menuItem = Icons.chevron_right_rounded;
 }

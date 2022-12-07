@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/constants/icons.dart';
+import 'package:tv_series_app/core/utils/snackbar_manager.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: AppIcons.settings,
+            icon: Icon(AppIcons.settings),
           ),
         ],
       ),
@@ -21,10 +22,28 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'HomeScreen',
-              style: TextStyle(
-                color: AppColors.main,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  AppIcons.menuItem,
+                  color: AppColors.main,
+                ),
+                Text(
+                  'HomeScreen',
+                  style: TextStyle(
+                    color: AppColors.main,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {
+                  SnackbarManager().displaySnackbar(context, 'My message');
+                },
+                child: const Text('Show snackbar'),
               ),
             ),
             SizedBox(

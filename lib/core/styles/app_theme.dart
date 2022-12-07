@@ -22,9 +22,17 @@ class AppTheme {
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppColors.main,
-        // textStyle: const TextStyle(
-        //   fontSize: 20,
-        // ),
+      ),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: AppColors.snackbarBg,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      behavior: SnackBarBehavior.floating,
+      contentTextStyle: TextStyle(
+        color: AppColors.snackbarMsg,
+        fontWeight: FontWeight.bold,
       ),
     ),
   );
