@@ -19,49 +19,75 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 80,
+                height: 50,
               ),
-              Row(
-                children: [
-                  Icon(
-                    AppIcons.pin,
-                    color: AppColors.main,
-                    size: 40,
+              GestureDetector(
+                onTap: () {
+                  //Here goes the push to the pin screen first time or modify pin
+
+                  print("pin");
+                },
+                child: Container(
+                  color: AppColors.scaffoldBg,
+                  padding: const EdgeInsets.all(20),
+                  width: 350,
+                  height: 100,
+                  child: Row(
+                    children: [
+                      Icon(
+                        AppIcons.pin,
+                        color: AppColors.main,
+                        size: 40,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'PIN',
+                        style: TextStyle(
+                          color: AppColors.main,
+                          fontSize: 27,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'PIN',
-                    style: TextStyle(
-                      color: AppColors.main,
-                      fontSize: 27,
-                    ),
-                  ),
-                ],
+                ),
               ),
               const SizedBox(
-                height: 90,
+                height: 50,
               ),
-              Row(
-                children: [
-                  Icon(
-                    AppIcons.fingerprint,
-                    color: AppColors.main,
-                    size: 40,
+              GestureDetector(
+                onTap: () {
+                  //Here goes the push to the fingerprint screen first time or modify fingerprint
+
+                  print("fingerprint");
+                },
+                child: Container(
+                  color: AppColors.scaffoldBg,
+                  padding: const EdgeInsets.all(20),
+                  width: 350,
+                  height: 100,
+                  child: Row(
+                    children: [
+                      Icon(
+                        AppIcons.fingerprint,
+                        color: AppColors.main,
+                        size: 40,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'FINGERPRINT',
+                        style: TextStyle(
+                          color: AppColors.main,
+                          fontSize: 27,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'FINGERPRINT',
-                    style: TextStyle(
-                      color: AppColors.main,
-                      fontSize: 27,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              )
             ],
           ),
         ],
