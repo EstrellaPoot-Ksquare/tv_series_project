@@ -59,14 +59,16 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withOpacity(0.6),
                     ),
                     padding: const EdgeInsets.all(12),
                     child: const Center(
                       child: Text(
-                        'Neon Genesis Evangelion',
+                        'Neon Genesis Evangelion ',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
                       ),
                     ),
                   ),
