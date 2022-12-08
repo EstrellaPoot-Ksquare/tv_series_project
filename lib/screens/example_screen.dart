@@ -3,8 +3,8 @@ import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/constants/icons.dart';
 import 'package:tv_series_app/core/utils/snackbar_manager.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class ExampleScreen extends StatelessWidget {
+  const ExampleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                   color: AppColors.main,
                 ),
                 Text(
-                  'HomeScreen',
+                  'ExampleScreen',
                   style: TextStyle(
                     color: AppColors.main,
                   ),

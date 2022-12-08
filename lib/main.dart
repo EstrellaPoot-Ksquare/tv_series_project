@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/styles/app_theme.dart';
+import 'package:tv_series_app/features/auth/screens/settings_screen.dart';
 //import 'package:tv_series_app/screens/home_screen.dart';
-import 'package:tv_series_app/features/series/screens/home_screen.dart';
-import 'package:tv_series_app/screens/settings.dart';
 
 void main() {
   runApp(const MyApp());
