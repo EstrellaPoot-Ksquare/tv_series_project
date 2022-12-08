@@ -1,35 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  /*ScrollController scrollController = ScrollController();
-  int max = 15;
-  List test = [];
-
-  @override
-  void initState() {
-    test = List.generate(max, ((index) => "num ${index + 1}"));
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        number();
-      }
-    });
-  }
-
-  number() {
-    for (var i = max; i < max + 20; i++) {
-      test.add("num ${i + 1}");
-    }
-    max += 20;
-    setState(() {});
-  }*/
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,33 +28,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: /*ListView.builder(
-        controller: scrollController,
-        itemCount: test.length + 1,
-        itemExtent: 80,
-        itemBuilder: (context, index) {
-          if (index == test.length) {
-            return CircularProgressIndicator();
-          }
-          return Text(
-            test[index].toString(),
-            style: TextStyle(fontSize: 50),
-          );
-        },
-      ),*/
-          Container(
+      body: Container(
         padding: const EdgeInsets.only(left: 12, right: 12),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 0.7,
+            childAspectRatio: 0.65,
             crossAxisSpacing: 12,
-            //mainAxisSpacing: 12,
           ),
           itemCount: 8,
           itemBuilder: (context, index) {
             return Container(
-              padding: const EdgeInsets.only(top: 12),
+              margin: const EdgeInsets.only(top: 12),
               child: Stack(children: [
                 SizedBox(
                   height: double.infinity,
@@ -105,8 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.black.withOpacity(0.5),
                     ),
                     padding: const EdgeInsets.all(12),
-                    child: Center(
-                      child: const Text(
+                    child: const Center(
+                      child: Text(
                         'Neon Genesis Evangelion',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
