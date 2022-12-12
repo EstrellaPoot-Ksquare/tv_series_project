@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SnackbarManager {
-  displaySnackbar(context, text) {
+  static displaySnackbar(context, text) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Container(

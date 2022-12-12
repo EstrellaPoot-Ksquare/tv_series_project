@@ -41,7 +41,7 @@ class ExampleScreen extends StatelessWidget {
               width: 200,
               child: ElevatedButton(
                 onPressed: () {
-                  SnackbarManager().displaySnackbar(context, 'My message');
+                  SnackbarManager.displaySnackbar(context, 'My message');
                 },
                 child: const Text('Show snackbar'),
               ),
