@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/constants/icons.dart';
+import 'package:tv_series_app/features/auth/controller/auth_controller.dart';
+
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  SettingsScreen({super.key});
 
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +61,11 @@ class SettingsScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
+                 
                   //Here goes the push to the fingerprint screen first time or modify fingerprint
+                  AuthController.fingerprintActivation(context);
 
-                  print("fingerprint");
+                  //ends fingerprint
                 },
                 child: Container(
                   color: AppColors.scaffoldBg,
