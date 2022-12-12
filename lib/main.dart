@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tv_series_app/core/routes/route_generator.dart';
 import 'package:tv_series_app/core/styles/app_theme.dart';
 import 'package:tv_series_app/features/auth/screens/firstpin_screen.dart';
 import 'package:tv_series_app/features/auth/screens/settings_screen.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.theme,
-      home: SettingsScreen(),
+      initialRoute: '/settings',
+      onGenerateRoute: RouteGenerator().generateRoute,
     );
   }
 }
