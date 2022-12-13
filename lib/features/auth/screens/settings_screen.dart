@@ -2,14 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/constants/icons.dart';
 import 'package:tv_series_app/features/auth/controller/auth_controller.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
+import 'package:tv_series_app/features/auth/controller/auth_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key});
 
-   
   @override
   Widget build(BuildContext context) {
+    Color fingerprintColor = AppColors.main;
+
+    final authProvider = Provider.of<AuthProvider>(context);
+
+    print("provider es ${authProvider.fingerprint}");
+    if (authProvider.fingerprint == 1) {
+      fingerprintColor = AppColors.active;
+    } else {
+      fingerprintColor = AppColors.main;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('SETTINGS'),
@@ -60,11 +72,23 @@ class SettingsScreen extends StatelessWidget {
                 height: 50,
               ),
               GestureDetector(
-                onTap: () {
-                 
+                onTap: () async {
                   //Here goes the push to the fingerprint screen first time or modify fingerprint
-                  AuthController.fingerprintActivation(context);
+                  var fingerprint =
+                      await FlutterSecureStorage().read(key: 'fingerprint');
 
+                  if (fingerprint == '1') {
+                    await AuthController().fingerprintDeactivation(context);
+                  } else {
+                    await AuthController().fingerprintActivation(context);
+                  }
+
+                  var fingerprint2 =
+                      await FlutterSecureStorage().read(key: 'fingerprint');
+
+                  
+                  print("providerChange es ${authProvider.check()}");
+                  print("fingerprint is: $fingerprint2");
                   //ends fingerprint
                 },
                 child: Container(
@@ -76,7 +100,7 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       Icon(
                         AppIcons.fingerprint,
-                        color: AppColors.main,
+                        color: fingerprintColor,
                         size: 40,
                       ),
                       const SizedBox(
@@ -85,7 +109,7 @@ class SettingsScreen extends StatelessWidget {
                       Text(
                         'FINGERPRINT',
                         style: TextStyle(
-                          color: AppColors.main,
+                          color: fingerprintColor,
                           fontSize: 27,
                         ),
                       ),
