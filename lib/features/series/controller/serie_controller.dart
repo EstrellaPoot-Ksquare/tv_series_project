@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/utils/dropdown_manager.dart';
-import 'package:tv_series_app/features/serie/repository/serie_repository.dart';
+import 'package:tv_series_app/features/series/repository/serie_repository.dart';
 import 'package:tv_series_app/models/episode.dart';
 import 'package:tv_series_app/models/serie.dart';
 
