@@ -1,16 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 import 'package:tv_series_app/features/auth/controller/auth_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
- 
-
   @override
   Widget build(BuildContext context) {
-   AuthProvider().updateFingerprint();
-    
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
@@ -26,10 +26,10 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () async{
-              var fingerprint = await FlutterSecureStorage().read(key: 'fingerprint');
-                   
-                   print("fingerprint is: $fingerprint");
+            onPressed: () async {
+              authProvider.updateFingerprint();
+
+              
               Navigator.pushNamed(context, "/settings");
             },
             icon: const Icon(

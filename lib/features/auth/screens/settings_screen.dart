@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
 
     final authProvider = Provider.of<AuthProvider>(context);
 
-    print("provider es ${authProvider.fingerprint}");
+    print("fingerprint color es ${authProvider.fingerprint}");
     if (authProvider.fingerprint == 1) {
       fingerprintColor = AppColors.active;
     } else {
@@ -77,6 +77,8 @@ class SettingsScreen extends StatelessWidget {
                   var fingerprint =
                       await FlutterSecureStorage().read(key: 'fingerprint');
 
+                  print("esto lee: $fingerprint");
+
                   if (fingerprint == '1') {
                     await AuthController().fingerprintDeactivation(context);
                   } else {
@@ -86,8 +88,14 @@ class SettingsScreen extends StatelessWidget {
                   var fingerprint2 =
                       await FlutterSecureStorage().read(key: 'fingerprint');
 
-                  
-                  print("providerChange es ${authProvider.check()}");
+                  var check = authProvider.check();
+
+                  await authProvider.updateFingerprint();
+
+                  print("check is $check");
+
+                  print(
+                      "Lo que llega de provider a la screen es ${authProvider.check()}");
                   print("fingerprint is: $fingerprint2");
                   //ends fingerprint
                 },
