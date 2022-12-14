@@ -5,8 +5,9 @@ import 'package:tv_series_app/features/auth/controller/auth_provider.dart';
 
 class AuthController {
   var storage = FlutterSecureStorage();
-
+  
   fingerprintActivation(context) async {
+    var authProvider = AuthProvider();
     LocalAuthentication auth = LocalAuthentication();
 
     bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
@@ -33,8 +34,6 @@ class AuthController {
       );
       if (didAuthenticate) {
         await storage.write(key: 'fingerprint', value: '1');
-        AuthProvider().updateFingerprint();
-
         SnackbarManager.displaySnackbar(
             context, "Fingerprint enabled to login");
       }
@@ -44,6 +43,7 @@ class AuthController {
   }
 
   fingerprintDeactivation(context) async {
+    var authProvider = AuthProvider();
     LocalAuthentication auth = LocalAuthentication();
 
     bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
@@ -70,8 +70,6 @@ class AuthController {
       );
       if (didAuthenticate) {
         await storage.write(key: 'fingerprint', value: '0');
-        AuthProvider().updateFingerprint();
-
         SnackbarManager.displaySnackbar(
             context, "Fingerprint disabled to login");
       }

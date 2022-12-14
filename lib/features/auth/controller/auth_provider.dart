@@ -2,28 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthProvider extends ChangeNotifier {
-  num fingerprint = 0;
 
-  void updateFingerprint() {
-    //var value = FlutterSecureStorage().read(key: 'fingerprint');
+  num? fingerprint;
 
-    //print("el aux es $value");
-    /* if (fingerprint == 0) {
+   updateFingerprint() async{
+    var value = await FlutterSecureStorage().read(key: 'fingerprint');
+
+    print("el aux es $value");
+     if (value == '1') {
       print("works1");
       fingerprint = 1;
     } else {
       print("works2");
       fingerprint = 0;
-    } */
-
-    fingerprint = 1;
+    } 
 
     notifyListeners();
   }
 
-  num check() {
+  num? check() {
     print("fingerprintInterno es $fingerprint");
+    notifyListeners();
     return fingerprint;
+    
   }
 
   
