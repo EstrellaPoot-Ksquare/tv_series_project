@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
 import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tv_series_app/features/series/controller/serie_controller.dart';
 
 void main() async {
   var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => PinController()),
+        ChangeNotifierProvider(create: (context) => SerieController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

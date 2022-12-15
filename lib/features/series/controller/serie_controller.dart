@@ -19,6 +19,7 @@ class SerieController extends ChangeNotifier {
   bool loading = false;
   // controller for home list view builder
   ScrollController controllerSeriesList = ScrollController();
+
   // Constructor
   SerieController() {
     addSeries();
@@ -32,29 +33,19 @@ class SerieController extends ChangeNotifier {
 
   // function for add request response to series array
   addSeries() async {
-    loading = true;
     series.addAll(await getSeriesPerPage(page));
-    loading = false;
     notifyListeners();
   }
 
   // function for the home listviewbuilder controller
   _scrollListener() async {
-    // print(controllerSeriesList.offset);
-    // print(controllerSeriesList.position.maxScrollExtent);
-    // print(controllerSeriesList.position.outOfRange);
-    // if (controllerSeriesList.offset >=
-    //     controllerSeriesList.position.maxScrollExtent &&
-    // !controllerSeriesList.position.outOfRange) {
-    // print(controllerSeriesList.position.pixels.roundToDouble());
-    // print(controllerSeriesList.position.maxScrollExtent);
-    if (controllerSeriesList.offset + 1000 >=
-            controllerSeriesList.position.maxScrollExtent &&
-        loading == false) {
-      print('bottom');
+    if (controllerSeriesList.position.maxScrollExtent ==
+        controllerSeriesList.offset) {
+      loading = true;
+      notifyListeners();
       page++;
-      print(page);
       await addSeries();
+      loading = false;
     }
   }
 

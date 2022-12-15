@@ -1,20 +1,23 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
+import 'package:flutter/src/widgets/image.dart' as img;
+import 'package:transparent_image/transparent_image.dart';
+import 'package:tv_series_app/features/series/controller/serie_controller.dart';
+import 'package:tv_series_app/models/serie.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    final serieController = Provider.of<SerieController>(context);
+    List<Serie> series = serieController.series;
 
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
           width: 140,
-          child: Image.asset('images/logo.png'),
+          child: img.Image.asset('images/logo.png'),
         ),
         actions: [
           IconButton(
@@ -25,12 +28,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () async {
-              authProvider.updateFingerprint();
-
-              
-              Navigator.pushNamed(context, "/settings");
-            },
+            onPressed: () {},
             icon: const Icon(
               Icons.settings,
               size: 30,
@@ -38,56 +36,82 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.only(left: 12, right: 12),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.65,
-            crossAxisSpacing: 12,
-          ),
-          itemCount: 8,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.only(top: 12),
-              child: Stack(children: [
-                SizedBox(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      'https://i.pinimg.com/originals/70/f8/9b/70f89be880db03d112133a6b37bd80aa.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 80,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.black.withOpacity(0.6),
-                    ),
-                    padding: const EdgeInsets.all(12),
-                    child: const Center(
-                      child: Text(
-                        'Neon Genesis Evangelion ',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
+      body: series.isNotEmpty
+          ? Container(
+              padding: const EdgeInsets.only(left: 12, right: 12),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: GridView.builder(
+                      physics: BouncingScrollPhysics(),
+                      controller: serieController.controllerSeriesList,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.65,
+                        crossAxisSpacing: 12,
                       ),
+                      itemCount: series.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: const EdgeInsets.only(top: 12),
+                          child: Stack(children: [
+                            SizedBox(
+                              height: double.infinity,
+                              width: double.infinity,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Stack(
+                                  children: [
+                                    Center(child: CircularProgressIndicator()),
+                                    FadeInImage.memoryNetwork(
+                                      placeholder: kTransparentImage,
+                                      image: "${series[index].image!.medium}",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                height: 80,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.black.withOpacity(0.6),
+                                ),
+                                padding: const EdgeInsets.all(12),
+                                child: Center(
+                                  child: Text(
+                                    "${series[index].name}",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]),
+                        );
+                      },
                     ),
                   ),
-                ),
-              ]),
-            );
-          },
-        ),
-      ),
+                  if (serieController.loading)
+                    /*Positioned(
+                      child: CircularProgressIndicator(),
+                      bottom: 40,
+                      left: MediaQuery.of(context).size.width * .5 - 30,
+                    )*/
+                    CircularProgressIndicator(),
+                ],
+              ),
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }
