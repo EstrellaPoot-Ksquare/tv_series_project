@@ -28,7 +28,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, "/settings");
+            },
             icon: const Icon(
               Icons.settings,
               size: 30,
