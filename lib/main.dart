@@ -3,6 +3,7 @@ import 'package:tv_series_app/core/routes/route_generator.dart';
 import 'package:tv_series_app/core/styles/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_series_app/features/auth/controller/auth_provider.dart';
+import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => PinController()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
