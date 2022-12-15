@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/constants/icons.dart';
+import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
 import 'package:tv_series_app/features/auth/repository/fingerprint_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
-  SettingsScreen({super.key});
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,6 @@ class SettingsScreen extends StatelessWidget {
 
     final authProvider = Provider.of<AuthProvider>(context);
 
-    
     if (authProvider.fingerprint == 1) {
       fingerprintColor = AppColors.active;
     } else {
@@ -37,10 +37,10 @@ class SettingsScreen extends StatelessWidget {
                 height: 50,
               ),
               GestureDetector(
-                onTap: () {
-                  //Here goes the push to the pin screen first time or modify pin
-
-                 
+                onTap: () async {
+                  await PinController().isPinCreated()
+                      ? Navigator.pushNamed(context, "/updatepin")
+                      : Navigator.pushNamed(context, "/firstpin");
                 },
                 child: Container(
                   color: AppColors.scaffoldBg,
@@ -74,18 +74,17 @@ class SettingsScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   //Here goes the push to the fingerprint screen first time or modify fingerprint
-                  var fingerprint =
-                      await const FlutterSecureStorage().read(key: 'fingerprint');
+                  var fingerprint = await const FlutterSecureStorage()
+                      .read(key: 'fingerprint');
 
-                 
                   if (fingerprint == '1') {
                     await AuthController().fingerprintDeactivation(context);
                   } else {
                     await AuthController().fingerprintActivation(context);
                   }
-                
+
                   await authProvider.updateFingerprint();
-                //ends fingerprint
+                  //ends fingerprint
                 },
                 child: Container(
                   color: AppColors.scaffoldBg,
