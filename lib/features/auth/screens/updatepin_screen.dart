@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
+import 'package:tv_series_app/core/utils/snackbar_manager.dart';
+import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
+import 'package:tv_series_app/features/auth/repository/pin_repository.dart';
 
 class UpdatePinScreen extends StatefulWidget {
   const UpdatePinScreen({super.key});
@@ -36,7 +40,6 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                   appContext: context,
                   length: 4,
                   onChanged: (String value) {},
-                  onCompleted: (String value) {},
                   keyboardType: TextInputType.number,
                   autoFocus: true,
                   obscureText: true,
@@ -61,6 +64,7 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                       activeColor: AppColors.main,
                       activeFillColor: AppColors.main,
                       selectedFillColor: AppColors.appBarBg),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
               const Text(
@@ -74,7 +78,6 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                   appContext: context,
                   length: 4,
                   onChanged: (String value) {},
-                  onCompleted: (String value) {},
                   keyboardType: TextInputType.number,
                   autoFocus: true,
                   obscureText: true,
@@ -99,13 +102,25 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                       activeColor: AppColors.main,
                       activeFillColor: AppColors.main,
                       selectedFillColor: AppColors.appBarBg),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
               SizedBox(
                 height: 50,
                 width: 200,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      (_currentpinController.text.length == 4 &&
+                              _newpinController.text.length == 4)
+                          ? PinController().updatePin(
+                              context,
+                              _currentpinController.text,
+                              _newpinController.text)
+                          : SnackbarManager.displaySnackbar(
+                              context, "Please fill out all the fields");
+                      _currentpinController.clear();
+                      _newpinController.clear();
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.main),
                     child: const Text(

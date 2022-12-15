@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
+import 'package:tv_series_app/core/utils/snackbar_manager.dart';
+import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
 
 class FirstPinScreen extends StatefulWidget {
   const FirstPinScreen({super.key});
@@ -11,6 +14,7 @@ class FirstPinScreen extends StatefulWidget {
 
 class _FirstPinScreenState extends State<FirstPinScreen> {
   final TextEditingController _pinController = TextEditingController();
+  final FocusNode _focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,6 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
                 appContext: context,
                 length: 4,
                 onChanged: (String value) {},
-                onCompleted: (String value) {},
                 keyboardType: TextInputType.number,
                 autoFocus: true,
                 obscureText: true,
@@ -60,6 +63,8 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
                     activeColor: AppColors.main,
                     activeFillColor: AppColors.main,
                     selectedFillColor: AppColors.appBarBg),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                focusNode: _focus,
               ),
             ),
             const SizedBox(height: 80),
@@ -67,7 +72,14 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
               height: 50,
               width: 200,
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _pinController.text.length == 4
+                        ? PinController().savePin(context, _pinController.text)
+                        : SnackbarManager.displaySnackbar(
+                            context, "Please fill out all the fields");
+                    _pinController.clear();
+                    _focus.requestFocus();
+                  },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: AppColors.main),
                   child: const Text(

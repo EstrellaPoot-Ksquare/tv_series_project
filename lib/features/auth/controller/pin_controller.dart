@@ -6,6 +6,9 @@ class PinController extends ChangeNotifier {
   Future<bool> isPinCreated() async =>
       await PinStorageRepository.getSavedPin() != null ? true : false;
 
+  Future<bool> checkPin(context, String pin) async =>
+      await PinStorageRepository.getSavedPin() == pin ? true : false;
+
   void savePin(context, String pin) async {
     await PinStorageRepository.setPin(pin);
     await PinStorageRepository.getSavedPin() == pin
