@@ -4,7 +4,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/utils/snackbar_manager.dart';
 import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
-import 'package:tv_series_app/features/auth/repository/pin_repository.dart';
 
 class UpdatePinScreen extends StatefulWidget {
   const UpdatePinScreen({super.key});

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tv_series_app/features/auth/screens/enterpin_screen.dart';
 import 'package:tv_series_app/features/auth/screens/firstpin_screen.dart';
 import 'package:tv_series_app/features/auth/screens/settings_screen.dart';
 import 'package:tv_series_app/features/auth/screens/updatepin_screen.dart';
@@ -19,6 +20,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => SettingsScreen());
       case '/updatepin':
         return MaterialPageRoute(builder: (context) => UpdatePinScreen());
+      case '/enterpin':
+        return MaterialPageRoute(builder: (context) => EnterPinScreen());
     }
   });
 }
