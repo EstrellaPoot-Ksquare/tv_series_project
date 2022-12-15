@@ -3,11 +3,14 @@ import 'package:tv_series_app/features/auth/screens/firstpin_screen.dart';
 import 'package:tv_series_app/features/auth/screens/settings_screen.dart';
 import 'package:tv_series_app/features/auth/screens/updatepin_screen.dart';
 import 'package:tv_series_app/features/series/screens/home_screen.dart';
+import 'package:tv_series_app/features/auth/screens/login_screen.dart';
 
 class RouteGenerator {
   var generateRoute = ((settings) {
     final args = settings.arguments;
     switch (settings.name) {
+      case '/login':
+        return MaterialPageRoute(builder: (context) => LoginScreen());
       case '/home':
         return MaterialPageRoute(builder: (context) => HomeScreen());
       case '/firstpin':

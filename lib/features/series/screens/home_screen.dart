@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_series_app/features/auth/controller/auth_provider.dart';
+import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
