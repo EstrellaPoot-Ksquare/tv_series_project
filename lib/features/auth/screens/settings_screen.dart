@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/constants/icons.dart';
-import 'package:tv_series_app/features/auth/controller/auth_controller.dart';
+import 'package:tv_series_app/features/auth/repository/fingerprint_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_series_app/features/auth/controller/auth_provider.dart';
+import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key});
@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
 
     final authProvider = Provider.of<AuthProvider>(context);
 
-    print("fingerprint color es ${authProvider.fingerprint}");
+    
     if (authProvider.fingerprint == 1) {
       fingerprintColor = AppColors.active;
     } else {
@@ -40,7 +40,7 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () {
                   //Here goes the push to the pin screen first time or modify pin
 
-                  print("pin");
+                 
                 },
                 child: Container(
                   color: AppColors.scaffoldBg,
@@ -75,29 +75,17 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () async {
                   //Here goes the push to the fingerprint screen first time or modify fingerprint
                   var fingerprint =
-                      await FlutterSecureStorage().read(key: 'fingerprint');
+                      await const FlutterSecureStorage().read(key: 'fingerprint');
 
-                  print("esto lee: $fingerprint");
-
+                 
                   if (fingerprint == '1') {
                     await AuthController().fingerprintDeactivation(context);
                   } else {
                     await AuthController().fingerprintActivation(context);
                   }
-
-                  var fingerprint2 =
-                      await FlutterSecureStorage().read(key: 'fingerprint');
-
-                  var check = authProvider.check();
-
+                
                   await authProvider.updateFingerprint();
-
-                  print("check is $check");
-
-                  print(
-                      "Lo que llega de provider a la screen es ${authProvider.check()}");
-                  print("fingerprint is: $fingerprint2");
-                  //ends fingerprint
+                //ends fingerprint
                 },
                 child: Container(
                   color: AppColors.scaffoldBg,
