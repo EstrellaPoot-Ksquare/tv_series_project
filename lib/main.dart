@@ -18,7 +18,7 @@ void main() async {
 
   var fingerprint = await FlutterSecureStorage().read(key: 'fingerprint');
 
-  if (fingerprint == "1") {
+  if (fingerprint == "1" || await PinController().isPinCreated()) {
     initialValue = "/login";
   } else {
     initialValue = "/home";
