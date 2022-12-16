@@ -14,7 +14,6 @@ class FirstPinScreen extends StatefulWidget {
 
 class _FirstPinScreenState extends State<FirstPinScreen> {
   final TextEditingController _pinController = TextEditingController();
-  final FocusNode _focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +63,6 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
                     activeFillColor: AppColors.main,
                     selectedFillColor: AppColors.appBarBg),
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                focusNode: _focus,
               ),
             ),
             const SizedBox(height: 80),
@@ -78,7 +76,6 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
                         : SnackbarManager.displaySnackbar(
                             context, "Please fill out all the fields");
                     _pinController.clear();
-                    _focus.requestFocus();
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: AppColors.main),

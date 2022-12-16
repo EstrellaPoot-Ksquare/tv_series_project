@@ -109,14 +109,15 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                 width: 200,
                 child: ElevatedButton(
                     onPressed: () async {
-                      (_currentpinController.text.length == 4 &&
-                              _newpinController.text.length == 4)
-                          ? PinController().updatePin(
-                              context,
-                              _currentpinController.text,
-                              _newpinController.text)
-                          : SnackbarManager.displaySnackbar(
-                              context, "Please fill out all the fields");
+                      if (_currentpinController.text.length == 4 &&
+                          _newpinController.text.length == 4) {
+                        PinController().updatePin(context,
+                            _currentpinController.text, _newpinController.text);
+                        Navigator.pop(context);
+                      } else {
+                        SnackbarManager.displaySnackbar(
+                            context, "Please fill out all the fields");
+                      }
                       _currentpinController.clear();
                       _newpinController.clear();
                     },
