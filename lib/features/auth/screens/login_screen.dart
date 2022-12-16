@@ -3,20 +3,26 @@ import 'package:provider/provider.dart';
 import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/constants/icons.dart';
+import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
 import 'package:tv_series_app/features/auth/repository/fingerprint_controller.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+  late int pinWidget = 0;
+
+  init() async {
+    await PinController().isPinCreated() ? pinWidget = 1 : pinWidget = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
+    init();
     final authProvider = Provider.of<AuthProvider>(context);
 
-      WidgetsBinding.instance
-        .addPostFrameCallback((_)async{
-          await authProvider.updateFingerprint();
-        });
-   
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await authProvider.updateFingerprint();
+    });
+
     final List<Widget> fingerprintOptions = <Widget>[
       const SizedBox(),
       GestureDetector(
@@ -53,6 +59,23 @@ class LoginScreen extends StatelessWidget {
       )
     ];
 
+    final List<Widget> pinOption = <Widget>[
+      const SizedBox(),
+      SizedBox(
+        height: 50,
+        width: 200,
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, "/enterpin");
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.main),
+            child: const Text(
+              "LOGIN WITH PIN",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            )),
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
@@ -73,7 +96,6 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-
         height: double.infinity,
         width: double.infinity,
         color: AppColors.scaffoldBg,
@@ -99,14 +121,12 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   fingerprintOptions.elementAt(authProvider.fingerprint),
+                  pinOption.elementAt(pinWidget),
                 ],
               ),
             ),
-            
           ],
         ),
-
-        
       ),
     );
   }
