@@ -9,4 +9,6 @@ class PinStorageRepository {
 
   static Future<String?> getSavedPin() async =>
       await _storage.read(key: _keyPin);
+
+  static Future deletePin() async => await _storage.delete(key: _keyPin);
 }

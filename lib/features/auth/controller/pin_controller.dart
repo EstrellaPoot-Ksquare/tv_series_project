@@ -24,4 +24,8 @@ class PinController extends ChangeNotifier {
         : SnackbarManager.displaySnackbar(
             context, "An error occured while updating your pin");
   }
+
+  void removePin(context) async {
+    await PinStorageRepository.deletePin();
+  }
 }
