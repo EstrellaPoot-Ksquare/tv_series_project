@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/features/auth/screens/enterpin_screen.dart';
 import 'package:tv_series_app/features/auth/screens/firstpin_screen.dart';
+import 'package:tv_series_app/features/auth/screens/login_screen.dart';
 import 'package:tv_series_app/features/auth/screens/settings_screen.dart';
 import 'package:tv_series_app/features/auth/screens/updatepin_screen.dart';
 import 'package:tv_series_app/features/series/screens/home_screen.dart';
-import 'package:tv_series_app/features/auth/screens/login_screen.dart';
+import 'package:tv_series_app/features/series/screens/serie_details_screen.dart';
 
 class RouteGenerator {
   var generateRoute = ((settings) {
     final args = settings.arguments;
     switch (settings.name) {
       case '/login':
-        return MaterialPageRoute(builder: (context) => LoginScreen());
+        return MaterialPageRoute(builder: (context) => const LoginScreen());
       case '/home':
-        return MaterialPageRoute(builder: (context) => HomeScreen());
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
+      case '/serie-details':
+        return MaterialPageRoute(
+            builder: (context) => const SerieDetailsScreen());
       case '/firstpin':
-        return MaterialPageRoute(builder: (context) => FirstPinScreen());
+        return MaterialPageRoute(builder: (context) => const FirstPinScreen());
       case '/settings':
-        return MaterialPageRoute(builder: (context) => SettingsScreen());
+        return MaterialPageRoute(builder: (context) => const SettingsScreen());
       case '/updatepin':
-        return MaterialPageRoute(builder: (context) => UpdatePinScreen());
+        return MaterialPageRoute(builder: (context) => const UpdatePinScreen());
       case '/enterpin':
-        return MaterialPageRoute(builder: (context) => EnterPinScreen());
+        return MaterialPageRoute(builder: (context) => const EnterPinScreen());
     }
+    return null;
   });
 }

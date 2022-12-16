@@ -8,5 +8,5 @@ class AppColors {
   static Color active = const Color(0xFF00FF28);
   static Color snackbarBg = const Color(0xfff25723);
   static Color snackbarMsg = const Color(0xFFFFFFFF);
-  
+  static Color normalText = const Color(0xFFFFFFFF);
 }

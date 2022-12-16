@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/utils/dropdown_manager.dart';
+import 'package:tv_series_app/core/utils/scroll_manager.dart';
 import 'package:tv_series_app/features/series/repository/serie_repository.dart';
 import 'package:tv_series_app/models/episode.dart';
 import 'package:tv_series_app/models/serie.dart';
@@ -17,27 +18,28 @@ class SerieController extends ChangeNotifier {
 
   int _seasonNum = 1;
   bool loading = false;
-  // controller for home list view builder
-  ScrollController controllerSeriesList = ScrollController();
+  bool screenDetailsScrolled = true;
 
-  // Constructor
+  ScrollController controllerSeriesList = ScrollController();
+  ScrollController controllerEpisodesList = ScrollController();
+  ScrollController controllerScreenDetails = ScrollController();
+
   SerieController() {
     addSeries();
     controllerSeriesList.addListener(_scrollListener);
+    controllerScreenDetails.addListener(_detailsScreenScrollListener);
   }
-  // Request for get list of series paginated
+
   getSeriesPerPage(int page) async {
     var response = await SerieRepository().getSeriesPerPage(page);
     return response.map<Serie>((serie) => Serie.fromJson(serie)).toList();
   }
 
-  // function for add request response to series array
   addSeries() async {
     series.addAll(await getSeriesPerPage(page));
     notifyListeners();
   }
 
-  // function for the home listviewbuilder controller
   _scrollListener() async {
     if (controllerSeriesList.position.maxScrollExtent ==
         controllerSeriesList.offset) {
@@ -49,33 +51,38 @@ class SerieController extends ChangeNotifier {
     }
   }
 
-  // function for get a list with all episodes of a serie
+  _detailsScreenScrollListener() async {
+    if (controllerScreenDetails.offset >= 200) {
+      screenDetailsScrolled = true;
+      notifyListeners();
+    } else if (controllerScreenDetails.offset < 200) {
+      screenDetailsScrolled = false;
+      notifyListeners();
+    }
+  }
+
   getEpisodesBySerie(int serieId) async {
     var response = await SerieRepository().getEpisodesBySerie(serieId);
     episodes =
         response.map<Episode>((episode) => Episode.fromJson(episode)).toList();
   }
 
-  // function for set the season selected
   setSeasonNum(int value) {
     _seasonNum = value;
     notifyListeners();
-    // return seasonNum;
   }
 
-  // function for get the season selected
   int getSeasonNum() {
     return _seasonNum;
   }
 
-  // function for divide the all episodes by season
   getSerieEpisodesBySeason() {
     episodesBySeason =
         episodes.where((element) => element.season == _seasonNum).toList();
+    ScrollManager().scrollToTopPosition(controllerEpisodesList);
     notifyListeners();
   }
 
-  // function for getting the different seasons and set the list of items for the dropdown button
   getSeasonsForDrowpdown() {
     var seen = <int>{};
     List<Episode> uniquelist =
@@ -83,18 +90,15 @@ class SerieController extends ChangeNotifier {
     return DropDownManager().dropdownItems(seen);
   }
 
-  // Initialize data for the details series screen
   setSerieDetailsScreen(int serieId) async {
     loading = true;
-    // set the season to 1
     setSeasonNum(1);
-    // stablish the current serie
     currentSerie = series.firstWhere((element) => element.id == serieId);
-    // make a request for get the episodes
     await getEpisodesBySerie(serieId);
-    // generate the items for the dropdown button
+    notifyListeners();
+    ScrollManager().scrollToTopPosition(controllerScreenDetails);
+    screenDetailsScrolled = false;
     getSeasonsForDrowpdown();
-    // get episodes by season
     getSerieEpisodesBySeason();
     loading = false;
   }
