@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/src/widgets/image.dart' as img;
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:tv_series_app/features/series/controller/serie_controller.dart';
 import 'package:tv_series_app/models/serie.dart';
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: GridView.builder(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       controller: serieController.controllerSeriesList,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -55,48 +55,63 @@ class HomeScreen extends StatelessWidget {
                       ),
                       itemCount: series.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(top: 12),
-                          child: Stack(children: [
-                            SizedBox(
-                              height: double.infinity,
-                              width: double.infinity,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Stack(
-                                  children: [
-                                    Center(child: CircularProgressIndicator()),
-                                    FadeInImage.memoryNetwork(
-                                      placeholder: kTransparentImage,
-                                      image: "${series[index].image!.medium}",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: 80,
+                        var serie = series[index];
+                        return GestureDetector(
+                          onTap: () {
+                            serieController.setSerieDetailsScreen(serie.id!);
+                            Navigator.pushNamed(context, '/serie-details');
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 12),
+                            child: Stack(children: [
+                              SizedBox(
+                                height: double.infinity,
                                 width: double.infinity,
-                                decoration: BoxDecoration(
+                                child: ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Colors.black.withOpacity(0.6),
-                                ),
-                                padding: const EdgeInsets.all(12),
-                                child: Center(
-                                  child: Text(
-                                    "${series[index].name}",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(color: Colors.white),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
+                                  child: Stack(
+                                    children: [
+                                      const Center(
+                                          child: CircularProgressIndicator()),
+                                      FadeInImage.memoryNetwork(
+                                        placeholder: kTransparentImage,
+                                        image: "${series[index].image!.medium}",
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ),
-                          ]),
+                              SizedBox(
+                                width: double.infinity,
+                                height: double.infinity,
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    height: 80,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.black.withOpacity(0.6),
+                                    ),
+                                    padding: const EdgeInsets.all(12),
+                                    child: Center(
+                                      child: Text(
+                                        "${series[index].name}",
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ]),
+                          ),
                         );
                       },
                     ),
@@ -107,11 +122,11 @@ class HomeScreen extends StatelessWidget {
                       bottom: 40,
                       left: MediaQuery.of(context).size.width * .5 - 30,
                     )*/
-                    CircularProgressIndicator(),
+                    const CircularProgressIndicator(),
                 ],
               ),
             )
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );
