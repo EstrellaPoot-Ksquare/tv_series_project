@@ -21,7 +21,7 @@ class RouteGenerator {
       case '/firstpin':
         return MaterialPageRoute(builder: (context) => const FirstPinScreen());
       case '/settings':
-        return MaterialPageRoute(builder: (context) => const SettingsScreen());
+        return MaterialPageRoute(builder: (context) =>  SettingsScreen());
       case '/updatepin':
         return MaterialPageRoute(builder: (context) => const UpdatePinScreen());
       case '/enterpin':
