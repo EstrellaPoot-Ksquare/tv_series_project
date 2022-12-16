@@ -71,10 +71,13 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
               width: 200,
               child: ElevatedButton(
                   onPressed: () {
-                    _pinController.text.length == 4
-                        ? PinController().savePin(context, _pinController.text)
-                        : SnackbarManager.displaySnackbar(
-                            context, "Please fill out all the fields");
+                    if (_pinController.text.length == 4) {
+                      PinController().savePin(context, _pinController.text);
+                      Navigator.pop(context);
+                    } else {
+                      SnackbarManager.displaySnackbar(
+                          context, "Please fill out all the fields");
+                    }
                     _pinController.clear();
                   },
                   style:
