@@ -10,18 +10,24 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   late int pinWidget = 0;
 
-  init() async {
+  init(context) async {
+     final authProvider = Provider.of<AuthProvider>(context);
     await PinController().isPinCreated() ? pinWidget = 1 : pinWidget = 0;
+    await authProvider.updateFingerprint();
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    init();
-    final authProvider = Provider.of<AuthProvider>(context);
+    init(context);
+   final authProvider = Provider.of<AuthProvider>(context);
+    int orIndex = 0;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await authProvider.updateFingerprint();
-    });
+    if (pinWidget == 1 && authProvider.fingerprint == 1) {
+        orIndex = 1;
+      }else{
+         orIndex = 0;
+      }
 
     final List<Widget> fingerprintOptions = <Widget>[
       const SizedBox(),
@@ -76,6 +82,16 @@ class LoginScreen extends StatelessWidget {
       ),
     ];
 
+     final List<Widget> orOption = <Widget>[
+      const SizedBox(),
+       const SizedBox(
+        
+        height: 100,
+        
+        child: Text("Or", style: TextStyle(fontSize: 20, color: Colors.white),),
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
@@ -121,6 +137,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   fingerprintOptions.elementAt(authProvider.fingerprint),
+                  orOption.elementAt(orIndex),
                   pinOption.elementAt(pinWidget),
                 ],
               ),

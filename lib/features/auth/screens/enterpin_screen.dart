@@ -19,6 +19,10 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: AppColors.main),
+          onPressed: () => Navigator.pushNamed(context, "/login")
+        ), 
         title: SizedBox(
           width: 140,
           child: Image.asset('images/logo.png'),

@@ -8,11 +8,22 @@ import 'package:provider/provider.dart';
 import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+ SettingsScreen({super.key});
+
+  late int pinWidget = 0;
+
+  init(context) async {
+    final authProvider = Provider.of<AuthProvider>(context);
+    await PinController().isPinCreated() ? pinWidget = 1 : pinWidget = 0;
+    await authProvider.updateFingerprint();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
+     init(context);
     Color fingerprintColor = AppColors.main;
+    Color pinColor = AppColors.main;
 
     final authProvider = Provider.of<AuthProvider>(context);
 
@@ -20,6 +31,12 @@ class SettingsScreen extends StatelessWidget {
       fingerprintColor = AppColors.active;
     } else {
       fingerprintColor = AppColors.main;
+    }
+
+    if (pinWidget == 1) {
+      pinColor = AppColors.active;
+    } else {
+      pinColor = AppColors.main;
     }
 
     return Scaffold(
@@ -51,7 +68,7 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       Icon(
                         AppIcons.pin,
-                        color: AppColors.main,
+                        color: pinColor,
                         size: 40,
                       ),
                       const SizedBox(
@@ -60,7 +77,7 @@ class SettingsScreen extends StatelessWidget {
                       Text(
                         'PIN',
                         style: TextStyle(
-                          color: AppColors.main,
+                          color: pinColor,
                           fontSize: 27,
                         ),
                       ),
