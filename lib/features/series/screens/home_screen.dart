@@ -19,6 +19,7 @@ class HomeScreen extends StatelessWidget {
           width: 140,
           child: img.Image.asset('images/logo.png'),
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: () {},
