@@ -98,6 +98,7 @@ class LoginScreen extends StatelessWidget {
           width: 140,
           child: Image.asset('images/logo.png'),
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: () async {
