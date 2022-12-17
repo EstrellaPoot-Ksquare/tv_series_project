@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
- SettingsScreen({super.key});
+  SettingsScreen({super.key});
 
   late int pinWidget = 0;
 
@@ -16,14 +16,14 @@ class SettingsScreen extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
     await PinController().isPinCreated() ? pinWidget = 1 : pinWidget = 0;
     await authProvider.updateFingerprint();
-    
   }
 
   @override
   Widget build(BuildContext context) {
-     init(context);
+    init(context);
     Color fingerprintColor = AppColors.main;
     Color pinColor = AppColors.main;
+    int pinDeleteButton = 0;
 
     final authProvider = Provider.of<AuthProvider>(context);
 
@@ -35,9 +35,29 @@ class SettingsScreen extends StatelessWidget {
 
     if (pinWidget == 1) {
       pinColor = AppColors.active;
+      pinDeleteButton = 1;
     } else {
       pinColor = AppColors.main;
+      pinDeleteButton = 0;
     }
+
+    final List<Widget> pinOption = <Widget>[
+      const SizedBox(),
+      Container(
+        margin: const EdgeInsets.only(left: 70, top: 180),
+        height: 50,
+        width: 200,
+        child: ElevatedButton(
+            onPressed: () {
+              PinController().removePin(context);
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.main),
+            child: const Text(
+              "DELETE PIN",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            )),
+      ),
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -128,7 +148,8 @@ class SettingsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
+              ),
+              pinOption.elementAt(pinDeleteButton),
             ],
           ),
         ],
