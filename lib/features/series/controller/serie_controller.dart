@@ -3,6 +3,7 @@ import 'package:tv_series_app/core/utils/dropdown_manager.dart';
 import 'package:tv_series_app/core/utils/scroll_manager.dart';
 import 'package:tv_series_app/features/series/repository/serie_repository.dart';
 import 'package:tv_series_app/models/episode.dart';
+import 'package:tv_series_app/models/search.dart';
 import 'package:tv_series_app/models/serie.dart';
 
 class SerieController extends ChangeNotifier {
@@ -12,6 +13,8 @@ class SerieController extends ChangeNotifier {
   List<Episode> episodes = [];
   // episodes divided by season
   List<Episode> episodesBySeason = [];
+  List<SearchModel> search = [];
+
   // selected serie
   Serie currentSerie = Serie();
   int page = 0;
@@ -101,5 +104,14 @@ class SerieController extends ChangeNotifier {
     getSeasonsForDrowpdown();
     getSerieEpisodesBySeason();
     loading = false;
+  }
+
+  searchShows(String query) async {
+    var response = await SerieRepository().searchShows(query);
+    search.addAll(response
+        .map<SearchModel>((search) => SearchModel.fromJson(search))
+        .toList());
+    notifyListeners();
+    print(search.length);
   }
 }

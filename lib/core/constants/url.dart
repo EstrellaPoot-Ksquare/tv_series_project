@@ -3,4 +3,5 @@ class AppUrl {
   static const String showsPerPage = 'shows?page=';
   static const String showInfo = 'shows/';
   static const String showEpisodes = '/episodes';
+  static const String searchShows = '/search/shows?q=';
 }
