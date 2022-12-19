@@ -17,6 +17,7 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("SET PIN"),
@@ -25,12 +26,12 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
       body: Center(
         child: Column(
           children: [
-            const SizedBox(height: 84),
+            SizedBox(height: size.height * 0.10),
             const Text(
               "ENTER YOUR PIN CODE",
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: size.height * 0.03),
             Padding(
               padding: const EdgeInsets.all(36.0),
               child: PinCodeTextField(
@@ -52,8 +53,8 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
                 enableActiveFill: true,
                 useHapticFeedback: true,
                 pinTheme: PinTheme(
-                    fieldHeight: 96,
-                    fieldWidth: 72,
+                    fieldHeight: size.height * 0.12,
+                    fieldWidth: size.width * 0.185,
                     borderWidth: 2,
                     shape: PinCodeFieldShape.box,
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -65,10 +66,10 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
             ),
-            const SizedBox(height: 80),
+            SizedBox(height: size.height * 0.06),
             SizedBox(
-              height: 50,
-              width: 200,
+              height: size.height * 0.06,
+              width: size.width * 0.50,
               child: ElevatedButton(
                   onPressed: () {
                     if (_pinController.text.length == 4) {

@@ -9,7 +9,6 @@ import 'package:tv_series_app/features/series/screens/serie_details_screen.dart'
 
 class RouteGenerator {
   var generateRoute = ((settings) {
-    final args = settings.arguments;
     switch (settings.name) {
       case '/login':
         return MaterialPageRoute(builder: (context) => LoginScreen());
@@ -21,7 +20,7 @@ class RouteGenerator {
       case '/firstpin':
         return MaterialPageRoute(builder: (context) => const FirstPinScreen());
       case '/settings':
-        return MaterialPageRoute(builder: (context) =>  SettingsScreen());
+        return MaterialPageRoute(builder: (context) => SettingsScreen());
       case '/updatepin':
         return MaterialPageRoute(builder: (context) => const UpdatePinScreen());
       case '/enterpin':

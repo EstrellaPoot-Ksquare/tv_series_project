@@ -17,12 +17,12 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColors.main),
-          onPressed: () => Navigator.pushNamed(context, "/login")
-        ), 
+            icon: Icon(Icons.arrow_back, color: AppColors.main),
+            onPressed: () => Navigator.pushNamed(context, "/login")),
         title: SizedBox(
           width: 140,
           child: Image.asset('images/logo.png'),
@@ -63,7 +63,7 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  const SizedBox(height: 84),
+                  SizedBox(height: size.height * 0.10),
                   const Text(
                     "ENTER YOUR PIN CODE",
                     style: TextStyle(
@@ -71,7 +71,7 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: size.height * 0.03),
                   Padding(
                     padding: const EdgeInsets.all(36.0),
                     child: PinCodeTextField(
@@ -93,8 +93,8 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
                       enableActiveFill: true,
                       useHapticFeedback: true,
                       pinTheme: PinTheme(
-                          fieldHeight: 96,
-                          fieldWidth: 72,
+                          fieldHeight: size.height * 0.12,
+                          fieldWidth: size.width * 0.185,
                           borderWidth: 2,
                           shape: PinCodeFieldShape.box,
                           borderRadius:
@@ -107,10 +107,10 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
                   ),
-                  const SizedBox(height: 56),
+                  SizedBox(height: size.height * 0.06),
                   SizedBox(
-                    height: 50,
-                    width: 200,
+                    height: size.height * 0.06,
+                    width: size.width * 0.50,
                     child: ElevatedButton(
                         onPressed: () async {
                           _pinController.text.length == 4
