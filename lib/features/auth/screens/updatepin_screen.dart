@@ -18,6 +18,7 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("UPDATE PIN"),
@@ -27,7 +28,7 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 54),
+              SizedBox(height: size.height * 0.06),
               const Text(
                 "ENTER YOUR CURRENT PIN CODE",
                 style: TextStyle(color: Colors.white, fontSize: 16),
@@ -53,8 +54,8 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                   enableActiveFill: true,
                   useHapticFeedback: true,
                   pinTheme: PinTheme(
-                      fieldHeight: 96,
-                      fieldWidth: 72,
+                      fieldHeight: size.height * 0.12,
+                      fieldWidth: size.width * 0.185,
                       borderWidth: 2,
                       shape: PinCodeFieldShape.box,
                       borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -91,8 +92,8 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                   enableActiveFill: true,
                   useHapticFeedback: true,
                   pinTheme: PinTheme(
-                      fieldHeight: 96,
-                      fieldWidth: 72,
+                      fieldHeight: size.height * 0.12,
+                      fieldWidth: size.width * 0.185,
                       borderWidth: 2,
                       shape: PinCodeFieldShape.box,
                       borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -105,8 +106,8 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                 ),
               ),
               SizedBox(
-                height: 50,
-                width: 200,
+                height: size.height * 0.06,
+                width: size.width * 0.50,
                 child: ElevatedButton(
                     onPressed: () async {
                       if (_currentpinController.text.length == 4 &&
