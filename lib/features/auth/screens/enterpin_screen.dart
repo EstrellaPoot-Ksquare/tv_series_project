@@ -27,17 +27,7 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
           width: 140,
           child: Image.asset('images/logo.png'),
         ),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              Navigator.pushNamed(context, "/settings");
-            },
-            icon: const Icon(
-              Icons.settings,
-              size: 30,
-            ),
-          ),
-        ],
+        
       ),
       body: Container(
         height: double.infinity,
