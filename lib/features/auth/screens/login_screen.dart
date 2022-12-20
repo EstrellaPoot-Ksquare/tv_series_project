@@ -99,18 +99,6 @@ class LoginScreen extends StatelessWidget {
           child: Image.asset('images/logo.png'),
         ),
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              authProvider.updateFingerprint();
-              Navigator.pushNamed(context, "/settings");
-            },
-            icon: const Icon(
-              Icons.settings,
-              size: 30,
-            ),
-          ),
-        ],
       ),
       body: Container(
         height: double.infinity,
