@@ -7,6 +7,7 @@ import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tv_series_app/features/series/controller/serie_controller.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,10 @@ void main() async {
   } else {
     initialValue = "/home";
   }
-
+   SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((value) => runApp(MyApp(initialScreen: initialValue,)));
   runApp(MyApp(
     initialScreen: initialValue,
   ));
