@@ -106,12 +106,11 @@ class SerieController extends ChangeNotifier {
     loading = false;
   }
 
-  searchShows(String query) async {
+  Future<List<SearchModel>> searchShows(String query) async {
     var response = await SerieRepository().searchShows(query);
-    search.addAll(response
+    search.clear();
+    return response
         .map<SearchModel>((search) => SearchModel.fromJson(search))
-        .toList());
-    notifyListeners();
-    print(search.length);
+        .toList();
   }
 }

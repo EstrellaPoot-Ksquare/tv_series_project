@@ -66,7 +66,7 @@ class Show {
   Show.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     url = json['url'];
-    name = json['name'];
+    name = json['name'] ?? '';
     type = json['type'];
     language = json['language'];
     genres = json['genres'].cast<String>();
