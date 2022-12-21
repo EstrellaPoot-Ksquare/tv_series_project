@@ -17,6 +17,7 @@ class SerieController extends ChangeNotifier {
   int page = 0;
 
   int _seasonNum = 1;
+  var seen = <int>{};
   bool loading = false;
   bool screenDetailsScrolled = true;
 
@@ -84,7 +85,7 @@ class SerieController extends ChangeNotifier {
   }
 
   getSeasonsForDrowpdown() {
-    var seen = <int>{};
+    seen.clear();
     List<Episode> uniquelist =
         episodes.where((element) => seen.add(element.season!)).toList();
     return DropDownManager().dropdownItems(seen);
@@ -92,13 +93,13 @@ class SerieController extends ChangeNotifier {
 
   setSerieDetailsScreen(int serieId) async {
     loading = true;
-    setSeasonNum(1);
     currentSerie = series.firstWhere((element) => element.id == serieId);
     await getEpisodesBySerie(serieId);
     notifyListeners();
     ScrollManager().scrollToTopPosition(controllerScreenDetails);
     screenDetailsScrolled = false;
     getSeasonsForDrowpdown();
+    setSeasonNum(seen.first);
     getSerieEpisodesBySeason();
     loading = false;
   }
