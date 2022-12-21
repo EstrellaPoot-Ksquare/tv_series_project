@@ -27,5 +27,10 @@ class PinController extends ChangeNotifier {
 
   void removePin(context) async {
     await PinStorageRepository.deletePin();
+    await isPinCreated() == false
+        ? SnackbarManager.displaySnackbar(
+            context, "Your pin has been successfully deleted")
+        : SnackbarManager.displaySnackbar(
+            context, "An error occured while deleted your pin");
   }
 }
