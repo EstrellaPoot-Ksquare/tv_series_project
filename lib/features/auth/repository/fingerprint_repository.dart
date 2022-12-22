@@ -2,12 +2,12 @@ import 'package:local_auth/local_auth.dart';
 import 'package:tv_series_app/core/utils/snackbar_manager.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:tv_series_app/core/constants/strings.dart';
 
-class AuthController {
+class FingerprintStorageRepository {
   var storage = const FlutterSecureStorage();
-  
+
   fingerprintActivation(context) async {
-   
     LocalAuthentication auth = LocalAuthentication();
 
     bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
@@ -16,26 +16,24 @@ class AuthController {
         canAuthenticateWithBiometrics || await auth.isDeviceSupported();
 
     if (!canAuthenticateWithBiometrics || !canAuthenticate) {
-      SnackbarManager.displaySnackbar(context, "Device is not supported");
+      SnackbarManager.displaySnackbar(context, AppString.deviceNotSupported);
     }
 
     List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
 
     if (!availableBiometrics.contains(BiometricType.strong)) {
-      SnackbarManager.displaySnackbar(
-          context, "Your device doesn't have fingerprint scanner");
+      SnackbarManager.displaySnackbar(context, AppString.noFingerprintScanner);
     }
 
     try {
       final bool didAuthenticate = await auth.authenticate(
-        localizedReason: 'Please, authenticate to enable fingerprint to login',
+        localizedReason: AppString.authenticateEnableFingerprint,
         options: const AuthenticationOptions(biometricOnly: true),
       );
       if (didAuthenticate) {
         await storage.write(key: 'fingerprint', value: '1');
-        SnackbarManager.displaySnackbar(
-            context, "Fingerprint enabled to login");
+        SnackbarManager.displaySnackbar(context, AppString.fingerprintEnabled);
       }
     } catch (e) {
       SnackbarManager.displaySnackbar(context, "error: $e");
@@ -43,7 +41,6 @@ class AuthController {
   }
 
   fingerprintDeactivation(context) async {
-   
     LocalAuthentication auth = LocalAuthentication();
 
     bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
@@ -52,26 +49,24 @@ class AuthController {
         canAuthenticateWithBiometrics || await auth.isDeviceSupported();
 
     if (!canAuthenticateWithBiometrics || !canAuthenticate) {
-      SnackbarManager.displaySnackbar(context, "Device is not supported");
+      SnackbarManager.displaySnackbar(context, AppString.deviceNotSupported);
     }
 
     List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
 
     if (!availableBiometrics.contains(BiometricType.strong)) {
-      SnackbarManager.displaySnackbar(
-          context, "Your device doesn't have fingerprint scanner");
+      SnackbarManager.displaySnackbar(context, AppString.noFingerprintScanner);
     }
 
     try {
       final bool didAuthenticate = await auth.authenticate(
-        localizedReason: 'Please, authenticate to disable fingerprint to login',
+        localizedReason: AppString.authenticateDisableFingerprint,
         options: const AuthenticationOptions(biometricOnly: true),
       );
       if (didAuthenticate) {
         await storage.write(key: 'fingerprint', value: '0');
-        SnackbarManager.displaySnackbar(
-            context, "Fingerprint disabled to login");
+        SnackbarManager.displaySnackbar(context, AppString.fingerprintDisabled);
       }
     } catch (e) {
       SnackbarManager.displaySnackbar(context, "error: $e");
@@ -79,7 +74,6 @@ class AuthController {
   }
 
   fingerprintLogin(context) async {
-   
     LocalAuthentication auth = LocalAuthentication();
 
     bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
@@ -88,33 +82,28 @@ class AuthController {
         canAuthenticateWithBiometrics || await auth.isDeviceSupported();
 
     if (!canAuthenticateWithBiometrics || !canAuthenticate) {
-      SnackbarManager.displaySnackbar(context, "Device is not supported");
+      SnackbarManager.displaySnackbar(context, AppString.deviceNotSupported);
     }
 
     List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
 
     if (!availableBiometrics.contains(BiometricType.strong)) {
-      SnackbarManager.displaySnackbar(
-          context, "Your device doesn't have fingerprint scanner");
+      SnackbarManager.displaySnackbar(context, AppString.noFingerprintScanner);
     }
 
     try {
       final bool didAuthenticate = await auth.authenticate(
-        localizedReason: 'Please, authenticate to enable fingerprint to login',
+        localizedReason: AppString.authenticateWithFingerprint,
         options: const AuthenticationOptions(biometricOnly: true),
       );
       if (didAuthenticate) {
         Navigator.pushReplacementNamed(context, "/home");
         SnackbarManager.displaySnackbar(
-            context, "Logged in with fingerprint");
+            context, AppString.successfulFingerprint);
       }
     } catch (e) {
       SnackbarManager.displaySnackbar(context, "error: $e");
     }
   }
-
-
-
-
 }

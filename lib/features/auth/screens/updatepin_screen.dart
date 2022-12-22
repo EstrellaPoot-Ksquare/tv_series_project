@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
+import 'package:tv_series_app/core/constants/strings.dart';
 import 'package:tv_series_app/core/utils/snackbar_manager.dart';
 import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
 
@@ -21,7 +22,7 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("UPDATE PIN"),
+        title: Text(AppString.updatePin),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -29,9 +30,9 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
           child: Column(
             children: [
               SizedBox(height: size.height * 0.06),
-              const Text(
-                "ENTER YOUR CURRENT PIN CODE",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+               Text(
+                AppString.enterCurrentPin,
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
               Padding(
                 padding: const EdgeInsets.all(36.0),
@@ -67,9 +68,9 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
-              const Text(
-                "ENTER YOUR NEW PIN CODE",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+               Text(
+                AppString.enterNewPin,
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
               Padding(
                 padding: const EdgeInsets.all(36.0),
@@ -117,17 +118,17 @@ class _UpdatePinScreenState extends State<UpdatePinScreen> {
                         Navigator.pop(context);
                       } else {
                         SnackbarManager.displaySnackbar(
-                            context, "Please fill out all the fields");
+                            context, AppString.fillAllFields);
                       }
                       _currentpinController.clear();
                       _newpinController.clear();
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.main),
-                    child: const Text(
-                      "UPDATE PIN",
+                    child: Text(
+                      AppString.updatePin,
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     )),
               ),
               const SizedBox(height: 12),
