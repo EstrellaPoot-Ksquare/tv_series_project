@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/constants/icons.dart';
+import 'package:tv_series_app/core/constants/strings.dart';
 import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
-import 'package:tv_series_app/features/auth/repository/fingerprint_controller.dart';
+import 'package:tv_series_app/features/auth/repository/fingerprint_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
+import 'package:tv_series_app/features/auth/controller/fingerprint_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key});
@@ -13,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
   late int pinWidget = 0;
 
   init(context) async {
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<FingerprintController>(context);
     await PinController().isPinCreated() ? pinWidget = 1 : pinWidget = 0;
     await authProvider.updateFingerprint();
   }
@@ -25,7 +26,7 @@ class SettingsScreen extends StatelessWidget {
     Color pinColor = AppColors.main;
     int pinDeleteButton = 0;
 
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<FingerprintController>(context);
 
     if (authProvider.fingerprint == 1) {
       fingerprintColor = AppColors.active;
@@ -46,17 +47,18 @@ class SettingsScreen extends StatelessWidget {
       Expanded(
         child: Center(
           child: Container(
-      
             height: 50,
             width: 200,
             child: ElevatedButton(
                 onPressed: () {
                   PinController().removePin(context);
                 },
-                style: ElevatedButton.styleFrom(backgroundColor: AppColors.main),
-                child: const Text(
-                  "DELETE PIN",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: AppColors.main),
+                child: Text(
+                  AppString.deletePin,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w600),
                 )),
           ),
         ),
@@ -65,7 +67,7 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SETTINGS'),
+        title: Text(AppString.settings),
         centerTitle: true,
       ),
       body: Column(
@@ -96,7 +98,7 @@ class SettingsScreen extends StatelessWidget {
                     width: 20,
                   ),
                   Text(
-                    'PIN',
+                    AppString.pin,
                     style: TextStyle(
                       color: pinColor,
                       fontSize: 27,
@@ -112,13 +114,15 @@ class SettingsScreen extends StatelessWidget {
           GestureDetector(
             onTap: () async {
               //Here goes the push to the fingerprint screen first time or modify fingerprint
-              var fingerprint = await const FlutterSecureStorage()
-                  .read(key: 'fingerprint');
+              var fingerprint =
+                  await const FlutterSecureStorage().read(key: 'fingerprint');
 
               if (fingerprint == '1') {
-                await AuthController().fingerprintDeactivation(context);
+                await FingerprintStorageRepository()
+                    .fingerprintDeactivation(context);
               } else {
-                await AuthController().fingerprintActivation(context);
+                await FingerprintStorageRepository()
+                    .fingerprintActivation(context);
               }
 
               await authProvider.updateFingerprint();
@@ -140,7 +144,7 @@ class SettingsScreen extends StatelessWidget {
                     width: 20,
                   ),
                   Text(
-                    'FINGERPRINT',
+                    AppString.fingerprint,
                     style: TextStyle(
                       color: fingerprintColor,
                       fontSize: 27,

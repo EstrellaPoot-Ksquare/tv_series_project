@@ -3,7 +3,7 @@ import 'package:tv_series_app/core/routes/route_generator.dart';
 import 'package:tv_series_app/core/styles/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
-import 'package:tv_series_app/features/auth/controller/fingerprint_provider.dart';
+import 'package:tv_series_app/features/auth/controller/fingerprint_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tv_series_app/features/series/controller/serie_controller.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -24,10 +24,12 @@ void main() async {
   } else {
     initialValue = "/home";
   }
-   SystemChrome.setPreferredOrientations([
+  SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(MyApp(initialScreen: initialValue,)));
+  ]).then((value) => runApp(MyApp(
+        initialScreen: initialValue,
+      )));
   runApp(MyApp(
     initialScreen: initialValue,
   ));
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => FingerprintController()),
         ChangeNotifierProvider(create: (context) => PinController()),
         ChangeNotifierProvider(create: (context) => SerieController()),
       ],

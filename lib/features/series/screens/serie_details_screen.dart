@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
+import 'package:tv_series_app/core/constants/strings.dart';
 import 'package:tv_series_app/core/utils/text_format.dart';
 import 'package:tv_series_app/features/series/controller/serie_controller.dart';
 import 'package:tv_series_app/models/serie.dart';
@@ -79,7 +80,7 @@ class SerieDetailsScreen extends StatelessWidget {
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  Text('EPISODES',
+                                  Text(AppString.episodes,
                                       style: TextStyle(color: AppColors.main)),
                                   const SizedBox(height: 15),
                                   Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:tv_series_app/core/constants/strings.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
 import 'package:tv_series_app/core/utils/snackbar_manager.dart';
 import 'package:tv_series_app/features/auth/controller/pin_controller.dart';
@@ -20,16 +21,16 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SET PIN"),
+        title:  Text(AppString.setPin),
         centerTitle: true,
       ),
       body: Center(
         child: Column(
           children: [
             SizedBox(height: size.height * 0.10),
-            const Text(
-              "ENTER YOUR PIN CODE",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+            Text(
+              AppString.enterPin,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
             SizedBox(height: size.height * 0.03),
             Padding(
@@ -77,15 +78,15 @@ class _FirstPinScreenState extends State<FirstPinScreen> {
                       Navigator.pop(context);
                     } else {
                       SnackbarManager.displaySnackbar(
-                          context, "Please fill out all the fields");
+                          context, AppString.fillAllFields);
                     }
                     _pinController.clear();
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: AppColors.main),
-                  child: const Text(
-                    "SAVE PIN",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  child: Text(
+                    AppString.savePin,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   )),
             ),
           ],

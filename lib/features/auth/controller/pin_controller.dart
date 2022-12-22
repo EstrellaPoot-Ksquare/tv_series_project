@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:tv_series_app/core/utils/snackbar_manager.dart';
 import 'package:tv_series_app/features/auth/repository/pin_repository.dart';
+import 'package:tv_series_app/core/constants/strings.dart';
 
 class PinController extends ChangeNotifier {
   Future<bool> isPinCreated() async =>
@@ -13,24 +14,24 @@ class PinController extends ChangeNotifier {
     await PinStorageRepository.setPin(pin);
     await PinStorageRepository.getSavedPin() == pin
         ? SnackbarManager.displaySnackbar(
-            context, "Your pin has been successfully saved")
+            context, AppString.pinSuccessfullySaved)
         : SnackbarManager.displaySnackbar(
-            context, "An error occured while saving your pin");
+            context, AppString.errorSavingPin);
   }
 
   void updatePin(context, String savedPin, String newPin) async {
     savedPin == await PinStorageRepository.getSavedPin()
         ? savePin(context, newPin)
         : SnackbarManager.displaySnackbar(
-            context, "An error occured while updating your pin");
+            context, AppString.errorUpdatingPin);
   }
 
   void removePin(context) async {
     await PinStorageRepository.deletePin();
     await isPinCreated() == false
         ? SnackbarManager.displaySnackbar(
-            context, "Your pin has been successfully deleted")
+            context, AppString.pinSuccessfullyDeleted)
         : SnackbarManager.displaySnackbar(
-            context, "An error occured while deleted your pin");
+            context, AppString.errorDeletingPin);
   }
 }
