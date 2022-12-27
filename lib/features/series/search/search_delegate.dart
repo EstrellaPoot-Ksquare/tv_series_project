@@ -48,13 +48,13 @@ class Delegate extends SearchDelegate {
       child: Column(
         children: [
           Expanded(
-            child: FutureBuilder<List<SearchModel>>(
+            child: FutureBuilder<List<Search>>(
               future: serieController.searchShows(query),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
                 }
-                List<SearchModel> search = snapshot.data!;
+                List<Search> search = snapshot.data!;
                 return GridView.builder(
                   physics: const BouncingScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -67,10 +67,10 @@ class Delegate extends SearchDelegate {
                     print(search[index].show!.id!.toInt());
                     return GestureDetector(
                       onTap: () {
-                        //print("id: ${search[index].show!.id!}");
+                        print("id: ${search[index].show!.id!}");
                         serieController
-                            .setSerieDetailsScreen(search[index].show!.id!);
-                        Navigator.pushNamed(context, '/serie-details');
+                            .setSerieDetailsScreen2(search[index].show!.id!);
+                        Navigator.pushNamed(context, '/search-details');
                       },
                       child: Container(
                         margin: const EdgeInsets.only(top: 12),
@@ -86,9 +86,12 @@ class Delegate extends SearchDelegate {
                                       child: CircularProgressIndicator()),
                                   FadeInImage.memoryNetwork(
                                     placeholder: kTransparentImage,
-                                    image: search[index].show?.image?.medium !=
+                                    image: search[index]
+                                                .show
+                                                ?.image
+                                                ?.original !=
                                             null
-                                        ? "${search[index].show!.image!.medium}"
+                                        ? "${search[index].show!.image!.original}"
                                         : 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png',
                                     fit: BoxFit.cover,
                                     width: double.infinity,

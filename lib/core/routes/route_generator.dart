@@ -5,6 +5,7 @@ import 'package:tv_series_app/features/auth/screens/login_screen.dart';
 import 'package:tv_series_app/features/auth/screens/settings_screen.dart';
 import 'package:tv_series_app/features/auth/screens/updatepin_screen.dart';
 import 'package:tv_series_app/features/series/screens/home_screen.dart';
+import 'package:tv_series_app/features/series/screens/search_details_screen.dart';
 import 'package:tv_series_app/features/series/screens/serie_details_screen.dart';
 
 class RouteGenerator {
@@ -17,6 +18,9 @@ class RouteGenerator {
       case '/serie-details':
         return MaterialPageRoute(
             builder: (context) => const SerieDetailsScreen());
+      case '/search-details':
+        return MaterialPageRoute(
+            builder: (context) => const SearchDetailsScreen());
       case '/firstpin':
         return MaterialPageRoute(builder: (context) => const FirstPinScreen());
       case '/settings':

@@ -1,10 +1,10 @@
-class SearchModel {
+class Search {
   double? score;
   Show? show;
 
-  SearchModel({this.score, this.show});
+  Search({this.score, this.show});
 
-  SearchModel.fromJson(Map<String, dynamic> json) {
+  Search.fromJson(Map<String, dynamic> json) {
     score = json['score'];
     show = json['show'] != null ? new Show.fromJson(json['show']) : null;
   }

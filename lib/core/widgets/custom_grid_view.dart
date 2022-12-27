@@ -11,7 +11,7 @@ class CustomGridView extends StatelessWidget {
   }) : super(key: key);
 
   final SerieController serieController;
-  final List series;
+  final List<Serie> series;
 
   @override
   Widget build(BuildContext context) {

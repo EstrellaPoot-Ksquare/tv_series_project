@@ -13,10 +13,11 @@ class SerieController extends ChangeNotifier {
   List<Episode> episodes = [];
   // episodes divided by season
   List<Episode> episodesBySeason = [];
-  List<SearchModel> search = [];
+  List<Search> search = [];
 
   // selected serie
   Serie currentSerie = Serie();
+  Search currentSearch = Search();
   int page = 0;
 
   int _seasonNum = 1;
@@ -106,11 +107,25 @@ class SerieController extends ChangeNotifier {
     loading = false;
   }
 
-  Future<List<SearchModel>> searchShows(String query) async {
-    var response = await SerieRepository().searchShows(query);
+  setSerieDetailsScreen2(int serieId) async {
+    loading = true;
+    setSeasonNum(1);
+    currentSearch = search.firstWhere((element) => element.show!.id == serieId);
+    await getEpisodesBySerie(serieId);
+    notifyListeners();
+    ScrollManager().scrollToTopPosition(controllerScreenDetails);
+    screenDetailsScrolled = false;
+    getSeasonsForDrowpdown();
+    getSerieEpisodesBySeason();
+    loading = false;
+  }
+
+  Future<List<Search>> searchShows(String query) async {
     search.clear();
-    return response
-        .map<SearchModel>((search) => SearchModel.fromJson(search))
-        .toList();
+    var response = await SerieRepository().searchShows(query);
+    var searchResponse =
+        response.map<Search>((search) => Search.fromJson(search)).toList();
+    search.addAll(searchResponse);
+    return search;
   }
 }
