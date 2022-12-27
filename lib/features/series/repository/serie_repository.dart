@@ -35,6 +35,7 @@ class SerieRepository {
     var response = await http.get(requestUrl);
     checkAndThrowError(response);
     var respJson = jsonDecode(response.body);
-    return respJson;
+    var newList = respJson.map((value) => value['show']).toList();
+    return newList;
   }
 }

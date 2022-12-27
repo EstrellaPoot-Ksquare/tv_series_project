@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/image.dart' as img;
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:tv_series_app/core/widgets/custom_grid_view.dart';
 //import 'package:tv_series_app/core/widgets/custom_grid_view.dart';
 import 'package:tv_series_app/features/series/controller/serie_controller.dart';
 import 'package:tv_series_app/features/series/search/search_delegate.dart';
@@ -16,62 +17,65 @@ class HomeScreen extends StatelessWidget {
     List<Serie> series = serieController.series;*/
 
     return Scaffold(
-        appBar: AppBar(
-          title: SizedBox(
-            width: 140,
-            child: img.Image.asset('images/logo.png'),
-          ),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              onPressed: () =>
-                  showSearch(context: context, delegate: Delegate()),
-              icon: const Icon(
-                Icons.search,
-                size: 30,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "/settings");
-              },
-              icon: const Icon(
-                Icons.settings,
-                size: 30,
-              ),
-            ),
-          ],
+      appBar: AppBar(
+        title: SizedBox(
+          width: 140,
+          child: img.Image.asset('images/logo.png'),
         ),
-        body: Consumer<SerieController>(
-          builder: (context, provider, child) {
-            List<Serie> series = provider.series;
-            return series.isNotEmpty
-                ? Container(
-                    padding: const EdgeInsets.only(left: 12, right: 12),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: CustomGridView(
-                              serieController: provider, series: series),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () => showSearch(context: context, delegate: Delegate()),
+            icon: const Icon(
+              Icons.search,
+              size: 30,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, "/settings");
+            },
+            icon: const Icon(
+              Icons.settings,
+              size: 30,
+            ),
+          ),
+        ],
+      ),
+      body: Consumer<SerieController>(
+        builder: (context, provider, child) {
+          List<Serie> series = provider.series;
+          return series.isNotEmpty
+              ? Container(
+                  padding: const EdgeInsets.only(left: 12, right: 12),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: CustomGridView(
+                          serieController: provider,
+                          series: series,
+                          controller: provider.controllerSeriesList,
                         ),
-                        if (provider.loading)
-                          /*Positioned(
+                      ),
+                      if (provider.loading)
+                        /*Positioned(
                       child: CircularProgressIndicator(),
                       bottom: 40,
                       left: MediaQuery.of(context).size.width * .5 - 30,
                     )*/
-                          const CircularProgressIndicator(),
-                      ],
-                    ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  );
-          },
-        ));
+                        const CircularProgressIndicator(),
+                    ],
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
+        },
+      ),
+    );
   }
 }
-
+/*
 class CustomGridView extends StatelessWidget {
   const CustomGridView({
     Key? key,
@@ -80,12 +84,12 @@ class CustomGridView extends StatelessWidget {
   }) : super(key: key);
 
   final SerieController serieController;
-  final List<Serie> series;
+  final List series;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      physics: const BouncingScrollPhysics(),
+      //physics: const BouncingScrollPhysics(),
       controller: serieController.controllerSeriesList,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -94,11 +98,10 @@ class CustomGridView extends StatelessWidget {
       ),
       itemCount: series.length,
       itemBuilder: (context, index) {
-        var serie = series[index];
         return GestureDetector(
           onTap: () {
-            serieController.setSerieDetailsScreen(serie.id!);
-            Navigator.pushNamed(context, '/serie-details');
+            /*serieController.setSerieDetailsScreen(series[index].id!);
+            Navigator.pushNamed(context, '/serie-details');*/
           },
           child: Container(
             margin: const EdgeInsets.only(top: 12),
@@ -154,3 +157,4 @@ class CustomGridView extends StatelessWidget {
     );
   }
 }
+*/

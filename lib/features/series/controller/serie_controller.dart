@@ -3,7 +3,6 @@ import 'package:tv_series_app/core/utils/dropdown_manager.dart';
 import 'package:tv_series_app/core/utils/scroll_manager.dart';
 import 'package:tv_series_app/features/series/repository/serie_repository.dart';
 import 'package:tv_series_app/models/episode.dart';
-import 'package:tv_series_app/models/search.dart';
 import 'package:tv_series_app/models/serie.dart';
 
 class SerieController extends ChangeNotifier {
@@ -13,11 +12,10 @@ class SerieController extends ChangeNotifier {
   List<Episode> episodes = [];
   // episodes divided by season
   List<Episode> episodesBySeason = [];
-  List<Search> search = [];
+  List<Serie> searchList = [];
 
   // selected serie
   Serie currentSerie = Serie();
-  Search currentSearch = Search();
   int page = 0;
 
   int _seasonNum = 1;
@@ -94,10 +92,10 @@ class SerieController extends ChangeNotifier {
     return DropDownManager().dropdownItems(seen);
   }
 
-  setSerieDetailsScreen(int serieId) async {
+  setSerieDetailsScreen(int serieId, List list) async {
     loading = true;
     setSeasonNum(1);
-    currentSerie = series.firstWhere((element) => element.id == serieId);
+    currentSerie = list.firstWhere((element) => element.id == serieId);
     await getEpisodesBySerie(serieId);
     notifyListeners();
     ScrollManager().scrollToTopPosition(controllerScreenDetails);
@@ -107,25 +105,12 @@ class SerieController extends ChangeNotifier {
     loading = false;
   }
 
-  setSerieDetailsScreen2(int serieId) async {
-    loading = true;
-    setSeasonNum(1);
-    currentSearch = search.firstWhere((element) => element.show!.id == serieId);
-    await getEpisodesBySerie(serieId);
-    notifyListeners();
-    ScrollManager().scrollToTopPosition(controllerScreenDetails);
-    screenDetailsScrolled = false;
-    getSeasonsForDrowpdown();
-    getSerieEpisodesBySeason();
-    loading = false;
-  }
-
-  Future<List<Search>> searchShows(String query) async {
-    search.clear();
+  Future<List<Serie>> searchShows(String query) async {
+    searchList.clear();
     var response = await SerieRepository().searchShows(query);
     var searchResponse =
-        response.map<Search>((search) => Search.fromJson(search)).toList();
-    search.addAll(searchResponse);
-    return search;
+        response.map<Serie>((search) => Serie.fromJson(search)).toList();
+    searchList.addAll(searchResponse);
+    return searchList;
   }
 }

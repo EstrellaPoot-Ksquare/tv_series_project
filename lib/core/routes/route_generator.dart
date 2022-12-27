@@ -18,9 +18,9 @@ class RouteGenerator {
       case '/serie-details':
         return MaterialPageRoute(
             builder: (context) => const SerieDetailsScreen());
-      case '/search-details':
+      /*case '/search-details':
         return MaterialPageRoute(
-            builder: (context) => const SearchDetailsScreen());
+            builder: (context) => const SearchDetailsScreen());*/
       case '/firstpin':
         return MaterialPageRoute(builder: (context) => const FirstPinScreen());
       case '/settings':

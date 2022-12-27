@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+/*import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tv_series_app/core/constants/colors.dart';
@@ -16,7 +16,7 @@ class SearchDetailsScreen extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Consumer<SerieController>(
       builder: (context, provider, child) {
-        var serie = provider.currentSearch;
+        var serie = provider.currentSerie;
         return SafeArea(
           child: Scaffold(
               extendBodyBehindAppBar: true,
@@ -241,3 +241,4 @@ class GenreLabels extends StatelessWidget {
     );
   }
 }
+*/

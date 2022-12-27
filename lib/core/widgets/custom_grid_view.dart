@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:tv_series_app/features/series/controller/serie_controller.dart';
-import 'package:tv_series_app/models/serie.dart';
 
 class CustomGridView extends StatelessWidget {
   const CustomGridView({
     Key? key,
     required this.serieController,
     required this.series,
+    this.controller,
   }) : super(key: key);
 
   final SerieController serieController;
-  final List<Serie> series;
+  final List series;
+  final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      physics: const BouncingScrollPhysics(),
-      controller: serieController.controllerSeriesList,
+      //physics: const BouncingScrollPhysics(),
+      //controller: serieController.controllerSeriesList,
+      controller: controller,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 0.65,
@@ -25,10 +27,9 @@ class CustomGridView extends StatelessWidget {
       ),
       itemCount: series.length,
       itemBuilder: (context, index) {
-        var serie = series[index];
         return GestureDetector(
           onTap: () {
-            serieController.setSerieDetailsScreen(serie.id!);
+            serieController.setSerieDetailsScreen(series[index].id!, series);
             Navigator.pushNamed(context, '/serie-details');
           },
           child: Container(
