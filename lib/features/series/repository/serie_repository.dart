@@ -27,4 +27,14 @@ class SerieRepository {
       throw Exception(response.body);
     }
   }
+
+  searchShows(String query) async {
+    var requestUrl =
+        Uri.parse('${AppUrl.seriesServer}${AppUrl.searchShows}$query');
+    var response = await http.get(requestUrl);
+    checkAndThrowError(response);
+    var respJson = jsonDecode(response.body);
+    var newList = respJson.map((value) => value['show']).toList();
+    return newList;
+  }
 }

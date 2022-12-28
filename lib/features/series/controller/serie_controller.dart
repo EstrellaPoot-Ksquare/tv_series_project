@@ -12,6 +12,8 @@ class SerieController extends ChangeNotifier {
   List<Episode> episodes = [];
   // episodes divided by season
   List<Episode> episodesBySeason = [];
+  // list of searched series
+  List<Serie> searchList = [];
   // selected serie
   Serie currentSerie = Serie();
   int page = 0;
@@ -91,16 +93,25 @@ class SerieController extends ChangeNotifier {
     return DropDownManager().dropdownItems(seen);
   }
 
-  setSerieDetailsScreen(int serieId) async {
+  setSerieDetailsScreen(int serieId, List list) async {
     loading = true;
-    currentSerie = series.firstWhere((element) => element.id == serieId);
+    setSeasonNum(1);
+    currentSerie = list.firstWhere((element) => element.id == serieId);
     await getEpisodesBySerie(serieId);
     notifyListeners();
     ScrollManager().scrollToTopPosition(controllerScreenDetails);
     screenDetailsScrolled = false;
     getSeasonsForDrowpdown();
-    setSeasonNum(seen.first);
     getSerieEpisodesBySeason();
     loading = false;
+  }
+
+  Future<List<Serie>> searchShows(String query) async {
+    searchList.clear();
+    var response = await SerieRepository().searchShows(query);
+    var searchResponse =
+        response.map<Serie>((search) => Serie.fromJson(search)).toList();
+    searchList.addAll(searchResponse);
+    return searchList;
   }
 }

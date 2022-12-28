@@ -46,7 +46,9 @@ class SerieDetailsScreen extends StatelessWidget {
                               ),
                               Image.network(
                                 width: double.infinity,
-                                serie.image!.original.toString(),
+                                serie.image != null
+                                    ? serie.image!.original.toString()
+                                    : 'https://www.azendportafolio.com/static/img/not-found.png',
                                 fit: BoxFit.fill,
                               ),
                             ],
@@ -159,9 +161,13 @@ class SerieDetailsScreen extends StatelessWidget {
                                                                         20),
                                                             child:
                                                                 Image.network(
-                                                              episode.image!
-                                                                  .original
-                                                                  .toString(),
+                                                              episode.image !=
+                                                                      null
+                                                                  ? episode
+                                                                      .image!
+                                                                      .original
+                                                                      .toString()
+                                                                  : 'https://www.azendportafolio.com/static/img/not-found.png',
                                                               fit: BoxFit.fill,
                                                               width: double
                                                                   .infinity,

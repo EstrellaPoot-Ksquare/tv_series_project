@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/image.dart' as img;
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
+import 'package:tv_series_app/core/widgets/custom_grid_view_widget.dart';
 import 'package:tv_series_app/features/series/controller/serie_controller.dart';
+import 'package:tv_series_app/features/series/search/search_delegate.dart';
 import 'package:tv_series_app/models/serie.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,9 +11,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final serieController = Provider.of<SerieController>(context);
-    List<Serie> series = serieController.series;
-
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
@@ -22,7 +20,7 @@ class HomeScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => showSearch(context: context, delegate: Delegate()),
             icon: const Icon(
               Icons.search,
               size: 30,
@@ -39,97 +37,36 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: series.isNotEmpty
-          ? Container(
-              padding: const EdgeInsets.only(left: 12, right: 12),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: GridView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      controller: serieController.controllerSeriesList,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.65,
-                        crossAxisSpacing: 12,
+      body: Consumer<SerieController>(
+        builder: (context, serieController, child) {
+          List<Serie> series = serieController.series;
+          return series.isNotEmpty
+              ? Container(
+                  padding: const EdgeInsets.only(left: 12, right: 12),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: CustomGridView(
+                          serieController: serieController,
+                          series: series,
+                          controller: serieController.controllerSeriesList,
+                        ),
                       ),
-                      itemCount: series.length,
-                      itemBuilder: (context, index) {
-                        var serie = series[index];
-                        return GestureDetector(
-                          onTap: () {
-                            serieController.setSerieDetailsScreen(serie.id!);
-                            Navigator.pushNamed(context, '/serie-details');
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 12),
-                            child: Stack(children: [
-                              SizedBox(
-                                height: double.infinity,
-                                width: double.infinity,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Stack(
-                                    children: [
-                                      const Center(
-                                          child: CircularProgressIndicator()),
-                                      FadeInImage.memoryNetwork(
-                                        placeholder: kTransparentImage,
-                                        image: "${series[index].image!.medium}",
-                                        fit: BoxFit.cover,
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: double.infinity,
-                                height: double.infinity,
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    height: 80,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.black.withOpacity(0.6),
-                                    ),
-                                    padding: const EdgeInsets.all(12),
-                                    child: Center(
-                                      child: Text(
-                                        "${series[index].name}",
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ]),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  if (serieController.loading)
-                    /*Positioned(
+                      if (serieController.loading)
+                        /*Positioned(
                       child: CircularProgressIndicator(),
                       bottom: 40,
                       left: MediaQuery.of(context).size.width * .5 - 30,
                     )*/
-                    const CircularProgressIndicator(),
-                ],
-              ),
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
+                        const CircularProgressIndicator(),
+                    ],
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
+        },
+      ),
     );
   }
 }
