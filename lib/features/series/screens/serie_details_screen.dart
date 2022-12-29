@@ -71,9 +71,11 @@ class SerieDetailsScreen extends StatelessWidget {
                                     height: 10,
                                   ),
                                   Text(
-                                    TextFormat()
-                                        .removeHTMLTags(serie.summary)
-                                        .toUpperCase(),
+                                    serie.summary != null
+                                        ? TextFormat()
+                                            .removeHTMLTags(serie.summary)
+                                            .toUpperCase()
+                                        : 'No description',
                                     style: TextStyle(
                                       color: AppColors.normalText,
                                       letterSpacing: 1,

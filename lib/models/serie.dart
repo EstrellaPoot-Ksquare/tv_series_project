@@ -24,12 +24,12 @@ class Serie {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['name'] = name;
+    data['name'] = name ?? 'No title';
     data['genres'] = genres;
     if (image != null) {
       data['image'] = image!.toJson();
     }
-    data['summary'] = summary;
+    data['summary'] = summary ?? 'No desciption';
     return data;
   }
 }
