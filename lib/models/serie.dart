@@ -29,7 +29,7 @@ class Serie {
     if (image != null) {
       data['image'] = image!.toJson();
     }
-    data['summary'] = summary ?? 'No desciption';
+    data['summary'] = summary ?? 'No description';
     return data;
   }
 }

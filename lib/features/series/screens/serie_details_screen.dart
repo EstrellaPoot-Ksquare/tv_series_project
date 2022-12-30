@@ -99,22 +99,40 @@ class SerieDetailsScreen extends StatelessWidget {
                                       ),
                                     ),
                                     height: 35,
-                                    child: DropdownButton(
-                                      style: TextStyle(
-                                        color: AppColors.normalText,
-                                      ),
-                                      iconEnabledColor: AppColors.normalText,
-                                      dropdownColor: AppColors.main,
-                                      focusColor:
-                                          AppColors.main.withOpacity(0.3),
-                                      underline: const SizedBox(),
-                                      value: provider.getSeasonNum(),
-                                      items: provider.getSeasonsForDrowpdown(),
-                                      onChanged: (int? value) {
-                                        provider.setSeasonNum(value!);
-                                        var eps =
-                                            provider.getSerieEpisodesBySeason();
-                                      },
+                                    child: Stack(
+                                      alignment: AlignmentDirectional.center,
+                                      children: [
+                                        provider.loading
+                                            ? const SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    strokeWidth: 0.5,
+                                                  ),
+                                                ),
+                                              )
+                                            : DropdownButton(
+                                                style: TextStyle(
+                                                  color: AppColors.normalText,
+                                                ),
+                                                iconEnabledColor:
+                                                    AppColors.normalText,
+                                                dropdownColor: AppColors.main,
+                                                focusColor: AppColors.main
+                                                    .withOpacity(0.3),
+                                                underline: const SizedBox(),
+                                                value: provider.getSeasonNum(),
+                                                items: provider
+                                                    .getSeasonsForDrowpdown(),
+                                                onChanged: (int? value) {
+                                                  provider.setSeasonNum(value!);
+                                                  var eps = provider
+                                                      .getSerieEpisodesBySeason();
+                                                },
+                                              ),
+                                      ],
                                     ),
                                   ),
                                   Container(

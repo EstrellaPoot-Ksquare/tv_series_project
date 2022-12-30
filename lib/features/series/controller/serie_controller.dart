@@ -68,7 +68,6 @@ class SerieController extends ChangeNotifier {
     var response = await SerieRepository().getEpisodesBySerie(serieId);
     episodes =
         response.map<Episode>((episode) => Episode.fromJson(episode)).toList();
-    print(episodes);
   }
 
   setSeasonNum(int value) {
@@ -90,7 +89,6 @@ class SerieController extends ChangeNotifier {
 
   getSeasonsForDrowpdown() {
     seen.clear();
-    print(episodes);
     List<Episode> uniquelist =
         episodes.where((element) => seen.add(element.season!)).toList();
     return DropDownManager().dropdownItems(seen);
