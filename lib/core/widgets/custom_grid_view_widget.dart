@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:tv_series_app/features/series/controller/serie_controller.dart';
 import 'package:tv_series_app/models/serie.dart';
 
@@ -42,15 +41,23 @@ class CustomGridView extends StatelessWidget {
                   child: Stack(
                     children: [
                       const Center(child: CircularProgressIndicator()),
-                      FadeInImage.memoryNetwork(
-                        placeholder: kTransparentImage,
-                        image: series[index].image != null
+                      Image.network(
+                        series[index].image != null
                             ? "${series[index].image!.medium}"
                             : 'https://www.azendportafolio.com/static/img/not-found.png',
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,
                       ),
+                      // FadeInImage.memoryNetwork(
+                      //   placeholder: kTransparentImage,
+                      //   image: series[index].image != null
+                      //       ? "${series[index].image!.medium}"
+                      //       : 'https://www.azendportafolio.com/static/img/not-found.png',
+                      //   fit: BoxFit.cover,
+                      //   width: double.infinity,
+                      //   height: double.infinity,
+                      // ),
                     ],
                   ),
                 ),
